@@ -16,5 +16,4 @@ const areaTags = d3.select('body').selectAll('div')
 areaTags.append('p').text(d => d)
 areaTags.append('svg')
 
-console.log(1)
 require ('./day1.js')
