@@ -17,3 +17,4 @@ areaTags.append('p').text(d => d)
 areaTags.append('svg')
 
 require ('./day1.js')
+require ('./day2.js')
