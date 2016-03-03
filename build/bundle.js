@@ -74,6 +74,7 @@
 	areaTags.append('svg');
 
 	__webpack_require__(7);
+	__webpack_require__(8);
 
 /***/ },
 /* 2 */
@@ -10007,6 +10008,68 @@
 	  },
 	  fill: '#D0021B',
 	  opacity: 0.5
+	});
+
+/***/ },
+/* 8 */
+/***/ function(module, exports, __webpack_require__) {
+
+	//day 2 target: normal barchart with axis
+	'use strict';
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _d3 = __webpack_require__(2);
+
+	var _d32 = _interopRequireDefault(_d3);
+
+	var data = [];
+	for (var i = 0; i < 90; i++) {
+	  data.push(Number.parseInt(Math.random() * 100));
+	}
+
+	var xScale = _d32['default'].scale.linear().domain([0, 90]).range([0, 360]);
+	var yScale = _d32['default'].scale.linear().domain([0, 100]).range([0, 360]);
+	var yAxisScale = _d32['default'].scale.linear().domain([0, 100]).range([360, 0]);
+
+	var xLeftPadding = 32;
+	var yTopPadding = 15;
+
+	var svgArea = document.querySelectorAll('svg')[1];
+	_d32['default'].select(svgArea).selectAll('rect').data(data).enter().append('rect').attr({
+	  height: function height(d) {
+	    return yScale(d);
+	  },
+	  width: 4,
+	  x: function x(_, i) {
+	    return xScale(i) + xLeftPadding;
+	  },
+	  y: function y(d) {
+	    return 360 - yScale(d) + yTopPadding;
+	  },
+	  fill: '#4A90E2'
+	})
+	//Impletation of the :hover
+	.on('mouseover', function () {
+	  _d32['default'].select(this).attr('fill', '#03336B');
+	}).on('mouseout', function () {
+	  _d32['default'].select(this).attr('fill', '#4A90E2');
+	});
+
+	var xAxis = _d32['default'].svg.axis().orient('bottom').scale(xScale);
+	_d32['default'].select(svgArea).append('g').call(xAxis).attr({
+	  id: 'xAxis',
+	  transform: 'translate(' + xLeftPadding + ', ' + (360 + yTopPadding) + ')',
+	  fill: 'none',
+	  stroke: 'black'
+	});
+
+	var yAxis = _d32['default'].svg.axis().orient('left').scale(yAxisScale);
+	_d32['default'].select(svgArea).append('g').call(yAxis).attr({
+	  id: 'yAxis',
+	  transform: 'translate(' + xLeftPadding + ', ' + yTopPadding + ')',
+	  fill: 'none',
+	  stroke: 'black'
 	});
 
 /***/ }
