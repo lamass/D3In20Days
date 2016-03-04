@@ -75,6 +75,7 @@
 
 	__webpack_require__(7);
 	__webpack_require__(8);
+	__webpack_require__(9);
 
 /***/ },
 /* 2 */
@@ -10071,6 +10072,31 @@
 	  fill: 'none',
 	  stroke: 'black'
 	});
+
+/***/ },
+/* 9 */
+/***/ function(module, exports, __webpack_require__) {
+
+	//day 3 target: transitions 101
+	'use strict';
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _d3 = __webpack_require__(2);
+
+	var _d32 = _interopRequireDefault(_d3);
+
+	var svgArea = document.querySelectorAll('svg')[2];
+	_d32['default'].select(svgArea).attr('id', 'day3').append('rect').attr({
+	  width: 100,
+	  height: 30,
+	  x: 100,
+	  y: 100
+	});
+
+	setInterval(function () {
+	  _d32['default'].select('#day3 rect').transition().duration(2490).attr('fill', '#4A90E2').transition().duration(2490).attr('width', 400).transition().duration(2490).attr('fill', '#000').transition().duration(2490).attr('width', 100);
+	}, 10 * 1000);
 
 /***/ }
 /******/ ]);
