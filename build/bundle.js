@@ -76,6 +76,7 @@
 	__webpack_require__(7);
 	__webpack_require__(8);
 	__webpack_require__(9);
+	__webpack_require__(10);
 
 /***/ },
 /* 2 */
@@ -10094,9 +10095,62 @@
 	  y: 100
 	});
 
-	setInterval(function () {
+	var transition = function transition() {
 	  _d32['default'].select('#day3 rect').transition().duration(2490).attr('fill', '#4A90E2').transition().duration(2490).attr('width', 400).transition().duration(2490).attr('fill', '#000').transition().duration(2490).attr('width', 100);
+	};
+
+	transition();
+	setInterval(function () {
+	  transition();
 	}, 10 * 1000);
+
+/***/ },
+/* 10 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _d3 = __webpack_require__(2);
+
+	var _d32 = _interopRequireDefault(_d3);
+
+	var currentDay = 4;
+
+	var randomPos = function randomPos(maximum) {
+	  return Number.parseInt(Math.random() * maximum);
+	};
+	//showcase width 400px same as height
+	var data = _d32['default'].range(20).map(function () {
+	  return [randomPos(400), randomPos(400)];
+	});
+
+	var color = _d32['default'].scale.category10();
+	var svgArea = document.querySelectorAll('svg')[currentDay - 1];
+
+	function dragged(d) {
+	  console.log(_d32['default'].event.x);
+	  d[0] = _d32['default'].event.x;
+	  d[1] = _d32['default'].event.y;
+	  _d32['default'].select(this).attr('transform', 'translate (' + d + ')');
+	}
+
+	var drag = _d32['default'].behavior.drag().origin(function (d) {
+	  return { x: d[0], y: d[1] };
+	}).on('drag', dragged);
+
+	_d32['default'].select(svgArea).selectAll('circle').data(data).enter().append('circle').attr({
+	  transform: function transform(d) {
+	    return 'translate (' + d + ')';
+	  },
+	  r: 20,
+	  fill: function fill(_, i) {
+	    return color(i);
+	  }
+	}).call(drag);
+
+	// not work => drag(d3.select(svgArea).selectAll('circle'))
 
 /***/ }
 /******/ ]);
