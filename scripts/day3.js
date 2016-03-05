@@ -12,7 +12,7 @@ d3.select(svgArea)
     y: 100
   })
 
-setInterval(() => {
+const transition = () => {
   d3.select('#day3 rect')
   .transition()
   .duration(2490)
@@ -26,4 +26,9 @@ setInterval(() => {
   .transition()
   .duration(2490)
   .attr('width', 100)
+}
+
+transition()
+setInterval(() => {
+  transition()
 }, 10 * 1000)
