@@ -33,4 +33,4 @@ d3.select(svgArea).selectAll('circle')
   })
   .call(drag)
 
-// drag(d3.select(svgArea).selectAll('circle'))
+// not work => drag(d3.select(svgArea).selectAll('circle'))
