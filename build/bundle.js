@@ -78,6 +78,7 @@
 	__webpack_require__(9);
 	__webpack_require__(10);
 	__webpack_require__(11);
+	__webpack_require__(12);
 
 /***/ },
 /* 2 */
@@ -10190,6 +10191,136 @@
 	}).on('mouseleave', function (_, i) {
 	  _d32['default'].select(this).transition().duration(300).style('fill', color(i));
 	});
+
+/***/ },
+/* 12 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+	var _d3 = __webpack_require__(2);
+
+	var _d32 = _interopRequireDefault(_d3);
+
+	__webpack_require__(13);
+
+	var currentDay = 6;
+
+	var data = [{
+	  time: 8, type: 'Sleep'
+	}, {
+	  time: 2, type: 'Exersie'
+	}, {
+	  time: 8, type: 'Work'
+	}, {
+	  time: 3, type: 'Eat & relax'
+	}, {
+	  time: 3, type: 'Study'
+	}];
+	var svgArea = document.querySelectorAll('svg')[currentDay - 1];
+
+	//pieLayout.value(d => d * d)
+	//kepp default value map: d => d
+	var pieLayout = _d32['default'].layout.pie().value(function (d) {
+	  return d.time;
+	});
+
+	var color = _d32['default'].scale.category10();
+	var arc = _d32['default'].svg.arc();
+	var tooltip = undefined;
+	arc.outerRadius(130);
+	arc.innerRadius(80);
+
+	_d32['default'].select(svgArea).classed(_defineProperty({}, 'day' + currentDay, true)).append('g').attr('transform', 'translate(200, 200)').selectAll('path').data(pieLayout(data)).enter().append('path').attr('d', arc).style('fill', function (_, i) {
+	  return color(i);
+	}).style('opacity', 0.5).style('stroke', 'black').style('stroke-width', '2px').on('mouseenter', function (d, i) {
+	  _d32['default'].select(this).transition().duration(300).style('fill', color(data.length + i));
+	  _d32['default'].select('#day6 .tooltip-type').text(data[i].type);
+	  _d32['default'].select('#day6 .tooltip-time').text(': ' + data[i].time + ' hours');
+	  tooltip.style('display', 'inline-block');
+	}).on('mousemove', function () {
+	  tooltip.style('transform', 'translate(' + _d32['default'].event.x + 'px, ' + _d32['default'].event.y + 'px)');
+	}).on('mouseleave', function (_, i) {
+	  _d32['default'].select(this).transition().duration(300).style('fill', color(i));
+	  tooltip.style('display', 'none');
+	});
+
+	var descrSelection = _d32['default'].select(svgArea).append('g').selectAll('g').data(data).enter().append('g').attr('transform', function (_, i) {
+	  return 'translate(160, ' + (170 + 15 * i) + ')';
+	});
+
+	descrSelection.append('rect').attr({
+	  width: 10,
+	  height: 10,
+	  fill: function fill(_, i) {
+	    return color(i);
+	  }
+	});
+
+	descrSelection.append('text').text(function (d) {
+	  return d.type;
+	}).attr({
+	  width: 10,
+	  height: 10,
+	  fill: function fill(_, i) {
+	    return color(i);
+	  },
+	  transform: function transform(_, i) {
+	    return 'translate(15, 10)';
+	  }
+	});
+
+	var newNode = document.querySelector('body').insertBefore(document.createElement('div'), document.querySelector('.day6').parentNode);
+
+	tooltip = _d32['default'].select(newNode).attr('id', 'day6').classed({ 'tooltip': true });
+
+	tooltip.append('text').classed({ 'tooltip-type': true });
+
+	tooltip.append('text').classed({ 'tooltip-time': true });
+
+/***/ },
+/* 13 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(14);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(6)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/sass-loader/index.js!./day6.scss", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/sass-loader/index.js!./day6.scss");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 14 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(5)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "#day6.tooltip {\n  background-color: #9B9B9B;\n  color: #fff;\n  display: none;\n  opacity: 0.5;\n  padding: 10px;\n  position: absolute; }\n", ""]);
+
+	// exports
+
 
 /***/ }
 /******/ ]);
