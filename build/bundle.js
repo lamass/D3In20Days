@@ -79,6 +79,7 @@
 	__webpack_require__(10);
 	__webpack_require__(11);
 	__webpack_require__(12);
+	__webpack_require__(15);
 
 /***/ },
 /* 2 */
@@ -10321,6 +10322,75 @@
 
 	// exports
 
+
+/***/ },
+/* 15 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _d3 = __webpack_require__(2);
+
+	var _d32 = _interopRequireDefault(_d3);
+
+	var currentDay = 7;
+	var data = {
+	  name: 'root',
+	  children: [{ name: 'leaf1' }, { name: 'leaf2' }, { name: 'leaf3' }, { name: 'leaf4' }]
+	};
+	var svgArea = document.querySelectorAll('svg')[currentDay - 1];
+	var color = _d32['default'].scale.category10();
+
+	var tree = _d32['default'].layout.tree().size([150, 150]);
+
+	var nodes = tree.nodes(data);
+
+	var svgGroup = _d32['default'].select(svgArea).append('g').attr('transform', 'translate(' + 120 + ',' + 120 + ')');
+
+	var node = svgGroup.selectAll('circle').data(nodes).enter();
+	node.append('circle').attr({
+	  'cx': function cx(d) {
+	    return d.x;
+	  },
+	  'cy': function cy(d) {
+	    return d.y;
+	  },
+	  'r': 9,
+	  'fill': function fill(d, i) {
+	    return color(i);
+	  }
+	});
+
+	svgGroup.selectAll('line').data(tree.links(nodes)).enter().append('line').attr({
+	  'x1': function x1(d) {
+	    return d.source.x;
+	  },
+	  'x2': function x2(d) {
+	    return d.target.x;
+	  },
+	  'y1': function y1(d) {
+	    return d.source.y;
+	  },
+	  'y2': function y2(d) {
+	    return d.target.y;
+	  },
+	  'stroke': 'black',
+	  'stroke-width': 2
+	});
+
+	node.append('text').text(function (d) {
+	  return d.name;
+	}).attr({
+	  'x': function x(d) {
+	    return d.x - 8;
+	  },
+	  'y': function y(d) {
+	    return d.y - 10;
+	  },
+	  fill: '#22A6F5'
+	});
 
 /***/ }
 /******/ ]);
