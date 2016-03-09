@@ -20,7 +20,7 @@ const tree = d3.layout.tree()
 const nodes = tree.nodes(data)
 
 const svgGroup = d3.select(svgArea).append('g')
-  .attr('transform', 'translate(' + 200 + ',' + 200 + ')')
+  .attr('transform', 'translate(' + 120 + ',' + 120 + ')')
 
 const node = svgGroup
   .selectAll('circle')
@@ -30,15 +30,10 @@ node
   .append('circle')
   .attr({
     'cx': d => d.x,
-    'cy': d => d.x,
+    'cy': d => d.y,
     'r': 9,
     'fill': (d, i) => color(i),
   })
-// node.append('text')
-//   .attr('dy', '.31em')
-//   .attr('text-anchor', function(d) { return d.x < 180 ? 'start' : 'end' })
-//   .attr('transform', function(d) { return d.x < 180 ? 'translate(8)' : 'rotate(180)translate(-8)' })
-//   .text(function(d) { return d.name })
 
 svgGroup
   .selectAll('line')
@@ -48,8 +43,16 @@ svgGroup
   .attr({
     'x1': d => d.source.x,
     'x2': d => d.target.x,
-    'y1': d => d.source.x,
-    'y2': d => d.target.x,
+    'y1': d => d.source.y,
+    'y2': d => d.target.y,
     'stroke': 'black',
     'stroke-width': 2
+  })
+
+node.append('text')
+  .text(function(d) { return d.name })
+  .attr({
+    'x': d => d.x - 8,
+    'y': d => d.y - 10,
+    fill: '#22A6F5',
   })
