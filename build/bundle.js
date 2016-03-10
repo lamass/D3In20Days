@@ -80,6 +80,7 @@
 	__webpack_require__(11);
 	__webpack_require__(12);
 	__webpack_require__(15);
+	__webpack_require__(16);
 
 /***/ },
 /* 2 */
@@ -10390,6 +10391,66 @@
 	    return d.y - 10;
 	  },
 	  fill: '#22A6F5'
+	});
+
+/***/ },
+/* 16 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _d3 = __webpack_require__(2);
+
+	var _d32 = _interopRequireDefault(_d3);
+
+	var currentDay = 8;
+
+	var svgArea = document.querySelectorAll('svg')[currentDay - 1];
+	var data = {
+	  name: 'root',
+	  children: [{
+	    name: 'leaf',
+	    children: [{ name: 'leaf' }, { name: 'leaf' }]
+	  }, {
+	    name: 'leaf',
+	    children: [{ name: 'leaf' }, { name: 'leaf' }]
+	  }, {
+	    name: 'leaf'
+	  }, {
+	    name: 'leaf'
+	  }]
+	};
+
+	var treeChart = _d32['default'].layout.tree().size([350, 350]);
+	var linkGenerator = _d32['default'].svg.diagonal();
+	var depthScale = _d32['default'].scale.category10([0, 1, 2]);
+
+	var nodeContainers = _d32['default'].select(svgArea).append('g').attr('transform', 'translate(30, 30)').selectAll('g').data(treeChart(data)).enter().append('g').attr('transform', function (d) {
+	  return 'translate(' + d.x + ', ' + d.y + ')';
+	});
+
+	nodeContainers.append('circle').attr({
+	  fill: function fill(d) {
+	    return depthScale(d.depth);
+	  },
+	  r: 10,
+	  stroke: 'white',
+	  'stroke-width': 2
+	});
+
+	nodeContainers.append('text').text(function (d) {
+	  return d.name;
+	}).attr({
+	  transform: 'translate(10, 4)'
+	});
+
+	_d32['default'].select(svgArea).selectAll('path').data(treeChart.links(treeChart(data))).enter().insert('path', 'g').attr('d', linkGenerator).style({
+	  fill: 'none',
+	  stroke: 'black',
+	  'stroke-width': '2',
+	  transform: 'translate(30px, 30px)'
 	});
 
 /***/ }
