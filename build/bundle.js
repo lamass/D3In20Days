@@ -81,6 +81,7 @@
 	__webpack_require__(12);
 	__webpack_require__(15);
 	__webpack_require__(16);
+	__webpack_require__(17);
 
 /***/ },
 /* 2 */
@@ -10451,6 +10452,63 @@
 	  stroke: 'black',
 	  'stroke-width': '2',
 	  transform: 'translate(30px, 30px)'
+	});
+
+/***/ },
+/* 17 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _d3 = __webpack_require__(2);
+
+	var _d32 = _interopRequireDefault(_d3);
+
+	var currentDay = 9;
+
+	var data = {
+	  'nodes': [{}, {}, {}, {}, {}, {}],
+	  'links': [{ 'source': 1, 'target': 0 }, { 'source': 2, 'target': 0 }, { 'source': 3, 'target': 0 }, { 'source': 4, 'target': 1 }, { 'source': 5, 'target': 2 }, { 'source': 5, 'target': 2 }]
+	};
+
+	var svgArea = document.querySelectorAll('svg')[currentDay - 1];
+	var color = _d32['default'].scale.category20();
+
+	var force = _d32['default'].layout.force().charge(-120).linkDistance(30).size([400, 400]);
+
+	force.nodes(data.nodes).links(data.links).start();
+
+	var link = _d32['default'].select(svgArea).selectAll('line').data(data.links).enter().append('line').attr({
+	  stroke: '#999',
+	  'stroke-opacity': 0.5,
+	  'stroke-width': 3
+	});
+
+	var node = _d32['default'].select(svgArea).selectAll('circle').data(data.nodes).enter().append('circle').attr({
+	  fill: function fill(d, i) {
+	    return color(i);
+	  },
+	  r: 5
+	}).call(force.drag);
+
+	force.on('tick', function () {
+	  link.attr('x1', function (d) {
+	    return d.source.x;
+	  }).attr('y1', function (d) {
+	    return d.source.y;
+	  }).attr('x2', function (d) {
+	    return d.target.x;
+	  }).attr('y2', function (d) {
+	    return d.target.y;
+	  });
+
+	  node.attr('cx', function (d) {
+	    return d.x;
+	  }).attr('cy', function (d) {
+	    return d.y;
+	  });
 	});
 
 /***/ }
