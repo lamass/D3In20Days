@@ -84,6 +84,7 @@
 	__webpack_require__(17);
 	__webpack_require__(18);
 	__webpack_require__(21);
+	__webpack_require__(23);
 
 /***/ },
 /* 2 */
@@ -203423,6 +203424,73 @@
 			]
 		}
 	};
+
+/***/ },
+/* 23 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _d3 = __webpack_require__(2);
+
+	var _d32 = _interopRequireDefault(_d3);
+
+	var currentDay = 12;
+
+	var data = {
+	  'nodes': [{ name: 'Web development', key: 0 }, { name: 'Front-end', key: 1 }, { name: 'Back-end', key: 1 }, { name: 'HTML', key: 2 }, { name: 'CSS', key: 2 }, { name: 'Javascript', key: 2 }, { name: 'Transitions', key: 3 }, { name: 'Layout', key: 3 }, { name: 'Frameworks', key: 3 }, { name: 'ES6', key: 3 }],
+	  'links': [{ 'source': 1, 'target': 0 }, { 'source': 2, 'target': 0 }, { 'source': 3, 'target': 1 }, { 'source': 4, 'target': 1 }, { 'source': 5, 'target': 1 }, { 'source': 6, 'target': 4 }, { 'source': 7, 'target': 4 }, { 'source': 8, 'target': 5 }, { 'source': 9, 'target': 5 }]
+	};
+
+	var svgArea = document.querySelectorAll('svg')[currentDay - 1];
+	var color = _d32['default'].scale.category20();
+
+	var force = _d32['default'].layout.force()
+	//The charge is the forece between nodes.
+	.charge(-320).linkDistance(80).size([400, 400]);
+
+	force.nodes(data.nodes).links(data.links).start();
+
+	var link = _d32['default'].select(svgArea).selectAll('line').data(data.links).enter().append('line').attr({
+	  stroke: '#4A90E2',
+	  'stroke-opacity': 0.5,
+	  'stroke-width': 2
+	});
+
+	var nodeSelection = _d32['default'].select(svgArea).selectAll('circle').data(data.nodes).enter().append('g').call(force.drag);
+
+	nodeSelection.append('circle').attr({
+	  fill: function fill(d) {
+	    return color(d.key);
+	  },
+	  r: 15
+	});
+	nodeSelection.append('text').text(function (d) {
+	  return d.name;
+	}).attr({
+	  'font-size': 8,
+	  dy: 2
+	});
+
+	force.on('tick', function () {
+	  link.attr('x1', function (d) {
+	    return d.source.x;
+	  }).attr('y1', function (d) {
+	    return d.source.y;
+	  }).attr('x2', function (d) {
+	    return d.target.x;
+	  }).attr('y2', function (d) {
+	    return d.target.y;
+	  });
+
+	  nodeSelection.attr({
+	    transform: function transform(d) {
+	      return 'translate(' + d.x + ' ' + d.y + ')';
+	    }
+	  });
+	});
 
 /***/ }
 /******/ ]);
