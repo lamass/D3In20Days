@@ -1,5 +1,5 @@
 # d3.js in 20 days
 [LiveDemo](http://ecutdavid.github.io/D3In20Days/)
 
-![image](https://cloud.githubusercontent.com/assets/10692276/13463069/7f8808f8-e0c5-11e5-8cde-bb00389b8e02.png)
+![image](https://cloud.githubusercontent.com/assets/10692276/13896932/1b583ea8-edda-11e5-93e2-fbb9347fc208.png)
 
