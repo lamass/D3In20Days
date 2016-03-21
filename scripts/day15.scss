@@ -4,24 +4,11 @@
        stroke-opacity: 0.5;
        stroke: black;
        opacity: .5;
-       fill: #4A90E2;
   }
   circle.cities {
        stroke-width: 1;
        stroke: black;
        fill: white;
-  }
-  circle.centroid {
-       fill: red;
-       pointer-events: none;
-  }
-  path.graticule {
-       fill: none;
-       stroke-width: 1;
-       stroke: black;
-  }
-  path.graticule.outline {
-       stroke: black;
   }
 }
 
