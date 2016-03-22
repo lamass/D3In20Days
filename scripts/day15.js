@@ -1,7 +1,7 @@
 //projection reference https://github.com/mbostock/d3/wiki/Geo-Projections
 //W:- E:+ N:+ S:-
 import d3 from 'd3'
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 
 import mapPolygonData from './day14_assets/world.json'

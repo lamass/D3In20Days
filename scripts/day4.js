@@ -11,7 +11,6 @@ const color = d3.scale.category10()
 const svgArea = document.querySelectorAll('svg')[currentDay - 1]
 
 function dragged(d) {
-  console.log(d3.event.x)
   d[0] = d3.event.x
   d[1] = d3.event.y
   d3.select(this)
