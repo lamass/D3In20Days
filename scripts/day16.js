@@ -84,8 +84,22 @@ const mapZoom = d3.behavior.zoom()
    .translate(projection.translate())
    .scale(projection.scale())
    .on('zoom', onZooming)
-
 d3.select(svgArea).call(mapZoom)
+
+const rotateScale = d3.scale.linear()
+  .domain([0, svgWidth])
+  .range([-180, 180])
+d3.select(svgArea)
+  .on('mousedown', function() {
+    d3.select(svgArea).on('mousemove', function() {
+      const point = d3.mouse(this)
+      projection.rotate([rotateScale(point[0], 0)])
+      onZooming()
+    })
+  })
+  .on('mouseup', () => {
+    d3.select(svgArea).on('mousemove', null)
+  })
 
 //React part
 const newNode = document.querySelector('body')
