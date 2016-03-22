@@ -1,5 +1,3 @@
-//projection reference https://github.com/mbostock/d3/wiki/Geo-Projections
-//W:- E:+ N:+ S:-
 import d3 from 'd3'
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
@@ -23,9 +21,11 @@ svgArea.id = `day${currentDay}`
 //Map part
 d3.select(svgArea).selectAll('g')
   .remove()
-const projection = d3.geo.equirectangular()
-  .scale(svgWidth / 6.28)
+const projection = d3.geo.orthographic()
+  .scale(svgWidth / 6.28 * 10 / 6)
   .translate([svgWidth / 2, svgHeight / 2])
+  .center([0, 0])
+  .clipAngle(90)
 const geoPath = d3.geo.path().projection(projection)
 d3.select(svgArea).append('g')
   .selectAll('path')
@@ -39,9 +39,6 @@ d3.select(svgArea).append('g')
   })
   .on('mouseout', function() { d3.select(this).attr('fill', '#4A90E2') })
   .on('mouseover', function() { d3.select(this).attr('fill', 'red') })
-  .append('circle')
-  //After bind the geo data, we can get the center position fromm geoPath.centroid
-  //                                get the bind border points array from geoPath.bounds
 
 const citySelection = d3.select(svgArea).append('g')
   .selectAll('g')
@@ -50,6 +47,9 @@ const citySelection = d3.select(svgArea).append('g')
   .append('g')
   .attr('transform', d => `translate(${projection([d.x, d.y])[0]}, ${projection([d.x, d.y])[1]})`)
   .attr('class', 'city-selection')
+  .style('display', d =>{
+    return Math.abs(parseInt(d.x)) < 90 ? 'block' : 'none'
+  })
 
 citySelection.append('circle')
   .attr({
@@ -65,16 +65,25 @@ citySelection.append('text')
     dx: 2,
     dy: 2,
   })
+
+const onZooming = () => {
+  projection.translate(mapZoom.translate()).scale(mapZoom.scale())
+  d3.select(svgArea).selectAll('path.countries')
+    .attr('d', geoPath)
+  d3.select(svgArea).selectAll('.city-selection')
+    .attr('transform', d => `translate(${projection([d.x, d.y])[0]}, ${projection([d.x, d.y])[1]})`)
+  //Hide ploygon in other side of earth
+  //the result of projection.rotate() is a three dimensional array
+  const currentRotate = projection.rotate()[0]
+  d3.select(svgArea).selectAll('.city-selection')
+    .style('display', d =>{
+      return Math.abs(parseInt(d.x) + currentRotate) < 90 ? 'block' : 'none'
+    })
+}
 const mapZoom = d3.behavior.zoom()
    .translate(projection.translate())
    .scale(projection.scale())
-   .on('zoom', () => {
-     projection.translate(mapZoom.translate()).scale(mapZoom.scale())
-     d3.select(svgArea).selectAll('path.countries')
-      .attr('d', geoPath)
-     d3.select(svgArea).selectAll('.city-selection')
-      .attr('transform', d => `translate(${projection([d.x, d.y])[0]}, ${projection([d.x, d.y])[1]})`)
-   })
+   .on('zoom', onZooming)
 
 d3.select(svgArea).call(mapZoom)
 
@@ -86,11 +95,24 @@ const newNode = document.querySelector('body')
   )
 newNode.id = `day${currentDay}Input`
 class InputWidget extends Component {
+  onZooming(isZoomIn) {
+    mapZoom.scale(mapZoom.scale() * (isZoomIn ? 1.5 : 0.75))
+      .translate([
+        ((mapZoom.translate()[0] - svgWidth / 2) * (isZoomIn ? 1.5 : 0.75)) + svgWidth / 2,
+        ((mapZoom.translate()[0] - svgHeight / 2) * (isZoomIn ? 1.5 : 0.75)) + svgHeight / 2
+      ])
+    onZooming()
+  }
 
   render() {
     return (
       <div className='input-area'>
-
+        <button onClick={this.onZooming.bind(this, true)}>
+          Zoom in
+        </button>
+        <button onClick={this.onZooming.bind(this, false)}>
+          Zoom out
+        </button>
       </div>
     )
   }

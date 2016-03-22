@@ -40,7 +40,6 @@ function renderMap(isMercator) {
     })
     .on('mouseout', function() { d3.select(this).attr('fill', '#4A90E2') })
     .on('mouseover', function() { d3.select(this).attr('fill', 'red') })
-    .append('circle')
     //After bind the geo data, we can get the center position fromm geoPath.centroid
     //                                get the bind border points array from geoPath.bounds
 
