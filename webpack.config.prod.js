@@ -15,10 +15,10 @@ module.exports = {
         loader: 'babel'
       }, {
         test: /\.scss$/,
-        loader: 'style!css!sass'
+        loader: 'style!css!autoprefixer?browsers=last 2 version!sass'
       }, {
         test: /\.css$/,
-        loader: 'style!css'
+        loader: 'style!css!autoprefixer?browsers=last 2 version'
       }, {
         test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
         loader: 'url?limit=10000&mimetype=application/font-woff'
@@ -46,6 +46,12 @@ module.exports = {
       compress: {
         warnings: false,
         dead_code: true,
+      }
+    }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        // Useful to reduce the size of client-side libraries, e.g. react
+        NODE_ENV: JSON.stringify('production')
       }
     }),
   ]
