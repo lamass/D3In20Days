@@ -45,8 +45,8 @@ class NumbersDisplayArea extends Component {
           </button>
         </div>
         {
-          data.map(d => (
-            <p>{ d }</p>
+          data.map((d, i) => (
+            <p key={ i }>{ d }</p>
           ))
         }
       </div>
