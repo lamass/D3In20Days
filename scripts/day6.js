@@ -25,8 +25,12 @@ const arc = d3.svg.arc()
 let tooltip
 arc.outerRadius(130)
 arc.innerRadius(80)
+let point = [0, 0]
 
 d3.select(svgArea)
+  .on('mousemove', function() {
+    point = d3.mouse(this)
+  })
   .classed({[`day${currentDay}`]: true})
   .append('g')
   .attr('transform', 'translate(200, 200)')
@@ -53,7 +57,7 @@ d3.select(svgArea)
   })
   .on('mousemove', () => {
     tooltip
-      .style('transform', `translate(${d3.event.x}px, ${d3.event.y}px)`)
+      .style('transform', `translate(${point[0]}px, ${point[1]}px)`)
   })
   .on('mouseleave', function(_, i) {
     d3.select(this)
@@ -90,10 +94,10 @@ descrSelection
     transform: (_, i) => `translate(15, 10)`
   })
 
-const newNode = document.querySelector('body')
+const newNode = document.querySelector('.day6').parentNode
   .insertBefore(
     document.createElement('div'),
-    document.querySelector('.day6').parentNode
+    document.querySelector('.day6')
   )
 
 tooltip = d3.select(newNode)

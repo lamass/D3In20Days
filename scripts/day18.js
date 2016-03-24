@@ -47,20 +47,34 @@ const svgArea = document.querySelectorAll('svg')[currentDay - 1]
 function updateChart(values) {
   d3.select(svgArea).select('path')
     .remove()
+  d3.select(svgArea).selectAll('circle')
+    .remove()
   const yScale = d3.scale.linear()
     .domain(d3.extent(values, d => d.value)).range([0, 390])
 
   const lineGenerator = d3.svg.line()
     .x(d => d.year * 7)
     .y(d => 400 - yScale(d.value))
-    // .interpolate('linear')
-    .interpolate('basis')
+    .interpolate('linear')
+    // .interpolate('basis')
   d3.select(svgArea).append('path')
     .datum(values)
     .attr({
       'd': lineGenerator,
       'stroke': '#4A90E2',
       'fill': 'none'
+    })
+  d3.select(svgArea).selectAll('circle')
+    .data(values)
+    .enter()
+    .append('circle')
+    .attr({
+      'r': 2,
+      'stroke': '#4A90E2',
+      'fill': 'none',
+      'cx': d => d.year * 7,
+      'cy': d => 400 - yScale(d.value),
+      'display': (d, i) => i % 3 === 2 ? 'block' : 'none'
     })
 }
 
