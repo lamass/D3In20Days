@@ -11,6 +11,7 @@ const svgHeight = 400
 
 const svgArea = document.querySelectorAll('svg')[currentDay - 1]
 svgArea.id = `day${currentDay}`
+// const color = d3.scale.category20()
 
 const projection = d3.geo.mercator()
   .scale(svgWidth / 6.28)
@@ -22,5 +23,6 @@ d3.select(svgArea).selectAll('path')
   .append('path')
   .attr({
     class: 'countries',
-    d: geoPath
+    d: geoPath,
+    fill: 'red'
   })

@@ -15,17 +15,28 @@ const svgArea = document.querySelectorAll('svg')[currentDay - 1]
 const yScale = d3.scale.linear().domain([0, maximum]).range([0, 390])
 
 const renderChart = () => {
-  d3.select(svgArea).selectAll('rect')
+  const lineSelection = d3.select(svgArea).selectAll('rect')
     .data(data)
     .enter()
+
+  lineSelection
     .append('rect')
     .attr({
       width: 8,
       height: yScale,
       fill: d => d3.extent(data).indexOf(d) === -1 ? '#4A90E2' : '#D0021B',
       x: (_, i) => 10 * i,
-      y: d => 400 - yScale(d)
+      y: d => 370 - yScale(d)
     })
+  lineSelection
+    .append('text')
+    .attr({
+      x: (_, i) => 10 * i + 4,
+      y: 372,
+      'font-size': 10,
+      'writing-mode': 'tb'
+    })
+    .text(d => d)
 }
 
 class NumbersDisplayArea extends Component {
