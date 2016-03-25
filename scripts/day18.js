@@ -6,14 +6,8 @@ import './day18.scss'
 
 let data = []
 const currentDay = 18
-
-//React part
-const newNode = document.querySelector('body')
-  .insertBefore(
-    document.createElement('div'),
-    document.querySelectorAll('svg')[currentDay].parentNode
-  )
-newNode.id = `day${currentDay}Input`
+let newNode
+let tooltip
 
 //Deal with data
 d3.csv('./dataFromWorldBank.csv',
@@ -43,6 +37,7 @@ d3.csv('./dataFromWorldBank.csv',
   }
 )
 const svgArea = document.querySelectorAll('svg')[currentDay - 1]
+svgArea.classList.add(`day${currentDay}`)
 
 function updateChart(values) {
   d3.select(svgArea).select('path')
@@ -69,14 +64,39 @@ function updateChart(values) {
     .enter()
     .append('circle')
     .attr({
-      'r': 2,
-      'stroke': '#4A90E2',
-      'fill': 'none',
+      'r': 3,
+      'stroke': '#4A90ff',
+      'fill': '#4A90ff',
       'cx': d => d.year * 7,
       'cy': d => 400 - yScale(d.value),
       'display': (d, i) => i % 3 === 2 ? 'block' : 'none'
     })
+    .on('mouseenter', d => {
+      tooltip.style.display = 'inline-block'
+      const point = d3.mouse(svgArea)
+      tooltip
+        .style.transform = `translate(${point[0] + 5}px, ${point[1] + 5}px)`
+      tooltip.innerHTML = `${d.year + 1960}, ${d.value}`
+    })
+    .on('mouseleave', () => {
+      tooltip.style.display = 'none'
+    })
 }
+//React part
+newNode = document.querySelector('body')
+  .insertBefore(
+    document.createElement('div'),
+    document.querySelectorAll('svg')[currentDay].parentNode
+  )
+newNode.id = `day${currentDay}Input`
+
+tooltip = document.querySelector(`.day${currentDay}`).parentNode
+  .insertBefore(
+    document.createElement('div'),
+    document.querySelector(`.day${currentDay}`)
+  )
+tooltip.id = `day${currentDay}Tooltip`
+tooltip.innerHTML = 'dawdwdw'
 
 class Controller extends Component {
   constructor() {

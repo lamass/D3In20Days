@@ -25,7 +25,6 @@ const arc = d3.svg.arc()
 let tooltip
 arc.outerRadius(130)
 arc.innerRadius(80)
-let point = [0, 0]
 
 d3.select(svgArea)
   .classed({[`day${currentDay}`]: true})
@@ -53,7 +52,7 @@ d3.select(svgArea)
       .style('display', `inline-block`)
   })
   .on('mousemove', () => {
-    point = d3.mouse(svgArea)
+    const point = d3.mouse(svgArea)
     tooltip
       .style('transform', `translate(${point[0] + 5}px, ${point[1] + 5}px)`)
   })
