@@ -28,9 +28,6 @@ arc.innerRadius(80)
 let point = [0, 0]
 
 d3.select(svgArea)
-  .on('mousemove', function() {
-    point = d3.mouse(this)
-  })
   .classed({[`day${currentDay}`]: true})
   .append('g')
   .attr('transform', 'translate(200, 200)')
@@ -56,8 +53,9 @@ d3.select(svgArea)
       .style('display', `inline-block`)
   })
   .on('mousemove', () => {
+    point = d3.mouse(svgArea)
     tooltip
-      .style('transform', `translate(${point[0]}px, ${point[1]}px)`)
+      .style('transform', `translate(${point[0] + 5}px, ${point[1] + 5}px)`)
   })
   .on('mouseleave', function(_, i) {
     d3.select(this)
