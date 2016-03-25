@@ -15,6 +15,8 @@ const cityData = [
   { name: 'Tokyo', x: 139, y: 35 },
   { name: 'Shanghai', x: 121, y: 31 },
   { name: 'London', x: 0, y: 51 },
+  // { name: 'Moscow', x: 37, y: 55 },
+  // { name: 'Roma', x: 12, y: 41 },
 ]
 
 const svgArea = document.querySelectorAll('svg')[currentDay - 1]
