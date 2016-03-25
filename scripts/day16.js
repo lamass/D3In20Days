@@ -108,12 +108,15 @@ const newNode = document.querySelector('body')
     document.querySelectorAll('svg')[currentDay].parentNode
   )
 newNode.id = `day${currentDay}Input`
+
+const zoomInRatio = 1.5
+const zoomOutRatio = 0.75
 class InputWidget extends Component {
   onZooming(isZoomIn) {
-    mapZoom.scale(mapZoom.scale() * (isZoomIn ? 1.5 : 0.75))
+    mapZoom.scale(mapZoom.scale() * (isZoomIn ? zoomInRatio : zoomOutRatio))
       .translate([
-        ((mapZoom.translate()[0] - svgWidth / 2) * (isZoomIn ? 1.5 : 0.75)) + svgWidth / 2,
-        ((mapZoom.translate()[0] - svgHeight / 2) * (isZoomIn ? 1.5 : 0.75)) + svgHeight / 2
+        ((mapZoom.translate()[0] - svgWidth / 2) * (isZoomIn ? zoomInRatio : zoomOutRatio)) + svgWidth / 2,
+        ((mapZoom.translate()[0] - svgHeight / 2) * (isZoomIn ? zoomInRatio : zoomOutRatio)) + svgHeight / 2
       ])
     onZooming()
   }
