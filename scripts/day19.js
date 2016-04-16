@@ -5,20 +5,27 @@ import d3 from 'd3'
 const currentDay = 19
 
 const svgArea = document.querySelectorAll('svg')[currentDay - 1]
-let data = ['a', 'b', 'e', 'f', 'g']
-d3.select(svgArea).selectAll('text')
-  .data(data, d => d)
-  .enter()
-  .append('text')
-  .text(d => d)
-  .attr({
-    transform: (d, i) => `translate(${50 + i * 20}, 200)`
-  })
 
-setTimeout(() => {
-  data = 'ccccccccccccccccccc'.split('').concat('g')
-  d3.select(svgArea).selectAll('text')
+function render(data) {
+  const selection = d3.select(svgArea).selectAll('text')
     .data(data, d => d)
-    .exit()
-    .remove()
+
+  selection.exit().remove()
+
+  selection
+    .attr({
+      transform: (d, i) => `translate(${50 + i * 20}, 200)`
+    })
+
+  selection.enter().append('text')
+    .text(d => d)
+    .attr({
+      transform: (d, i) => `translate(${50 + i * 20}, 200)`
+    })
+}
+
+setInterval(() => {
+  const data = 'abcdefghijklmn'.split('')
+  const randomArr = d3.shuffle(data).slice(Number.parseInt(Math.random() * data.length))
+  render(randomArr)
 }, 2000)
