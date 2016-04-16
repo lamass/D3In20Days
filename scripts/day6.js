@@ -20,7 +20,7 @@ const svgArea = document.querySelectorAll('svg')[currentDay - 1]
 //kepp default value map: d => d
 const pieLayout = d3.layout.pie().value(d => d.time)
 
-const color = d3.scale.category10()
+const color = d3.scaleCategory10
 const arc = d3.svg.arc()
 let tooltip
 arc.outerRadius(130)

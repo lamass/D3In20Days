@@ -11,7 +11,7 @@ const svgArea = document.querySelectorAll('svg')[currentDay - 1]
 const pieLayout = d3.layout.pie()
 const pie = pieLayout(data)
 
-const color = d3.scale.category10()
+const color = d3.scaleCategory10
 const extendColor = d3.scale.category20()
 const arc = d3.svg.arc()
 arc.outerRadius(100)

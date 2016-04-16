@@ -12,7 +12,7 @@ const data = {
   ]
 }
 const svgArea = document.querySelectorAll('svg')[currentDay - 1]
-const color = d3.scale.category10()
+const color = d3.scaleCategory10
 
 const tree = d3.layout.tree()
   .size([150, 150])

@@ -7,7 +7,7 @@ const randomPos = maximum => Number.parseInt(Math.random() * maximum)
 //showcase width 400px same as height
 const data = d3.range(20).map(() => [randomPos(400), randomPos(400)])
 
-const color = d3.scale.category10()
+const color = d3.scaleCategory10
 const svgArea = document.querySelectorAll('svg')[currentDay - 1]
 
 function dragged(d) {
@@ -25,11 +25,9 @@ d3.select(svgArea).selectAll('circle')
   .data(data)
   .enter()
   .append('circle')
-  .attr({
-    transform: d =>`translate (${d})`,
-    r: 20,
-    fill: (_, i) => color(i)
-  })
+  .attr('transform', d =>`translate (${d})`)
+  .attr('r', 20)
+  .attr('fill', (_, i) => color(i))
   .call(drag)
 
 // not work => drag(d3.select(svgArea).selectAll('circle'))

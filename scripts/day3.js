@@ -5,12 +5,10 @@ const svgArea = document.querySelectorAll('svg')[2]
 d3.select(svgArea)
   .attr('id', 'day3')
   .append('rect')
-  .attr({
-    width: 100,
-    height: 30,
-    x: 100,
-    y: 100
-  })
+  .attr('width', 100)
+  .attr('height', 30)
+  .attr('x', 100)
+  .attr('y', 100)
 
 const transition = () => {
   d3.select('#day3 rect')

@@ -44,7 +44,7 @@ function updateChart(values) {
     .remove()
   d3.select(svgArea).selectAll('circle')
     .remove()
-  const yScale = d3.scale.linear()
+  const yScale = d3.scaleLinear()
     .domain(d3.extent(values, d => d.value)).range([0, 390])
 
   const lineGenerator = d3.svg.line()

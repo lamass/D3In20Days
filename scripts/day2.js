@@ -6,9 +6,9 @@ for (let i = 0; i < 90; i++) {
   data.push(Number.parseInt(Math.random() * 100))
 }
 
-const xScale = d3.scale.linear().domain([0, 90]).range([0, 360])
-const yScale = d3.scale.linear().domain([0, 100]).range([0, 360])
-const yAxisScale = d3.scale.linear().domain([0, 100]).range([360, 0])
+const xScale = d3.scaleLinear().domain([0, 90]).range([0, 360])
+const yScale = d3.scaleLinear().domain([0, 100]).range([0, 360])
+const yAxisScale = d3.scaleLinear().domain([0, 100]).range([360, 0])
 
 const xLeftPadding = 32
 const yTopPadding = 15
@@ -18,13 +18,11 @@ d3.select(svgArea).selectAll('rect')
   .data(data)
   .enter()
   .append('rect')
-  .attr({
-    height: d => yScale(d),
-    width: 4,
-    x: (_, i) => xScale(i) + xLeftPadding,
-    y: d => 360 - yScale(d) + yTopPadding,
-    fill: '#4A90E2'
-  })
+  .attr('height', d=> yScale(d))
+  .attr('width', 4)
+  .attr('x', (_, i) => xScale(i) + xLeftPadding)
+  .attr('y', d=> 360 - yScale(d) + yTopPadding)
+  .attr('fill', '#4A90E2')
   //Impletation of the :hover
   .on('mouseover', function() {
     d3.select(this)
@@ -35,28 +33,22 @@ d3.select(svgArea).selectAll('rect')
       .attr('fill', '#4A90E2')
   })
 
-const xAxis = d3.svg.axis()
-  .orient('bottom')
+const xAxis = d3.axisBottom()
   .scale(xScale)
 d3.select(svgArea)
   .append('g')
   .call(xAxis)
-  .attr({
-    id: 'xAxis',
-    transform: `translate(${xLeftPadding}, ${360 + yTopPadding})`,
-    fill: 'none',
-    stroke: 'black'
-  })
+  .attr('id', 'xAxis')
+  .attr('transform', `translate(${xLeftPadding}, ${360 + yTopPadding})`)
+  .attr('fill', 'none')
+  .attr('stroke', 'black')
 
-const yAxis = d3.svg.axis()
-  .orient('left')
+const yAxis = d3.axisLeft()
   .scale(yAxisScale)
 d3.select(svgArea)
   .append('g')
   .call(yAxis)
-  .attr({
-    id: 'yAxis',
-    transform: `translate(${xLeftPadding}, ${yTopPadding})`,
-    fill: 'none',
-    stroke: 'black'
-  })
+  .attr('id', 'yAxis')
+  .attr('transform', `translate(${xLeftPadding}, ${yTopPadding})`)
+  .attr('fill', 'none')
+  .attr('stroke', 'black')

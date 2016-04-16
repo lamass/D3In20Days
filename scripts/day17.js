@@ -12,7 +12,7 @@ const data = d3.range(40).map(() => parseInt(Math.random() * maximum))
 
 const svgArea = document.querySelectorAll('svg')[currentDay - 1]
 
-const yScale = d3.scale.linear().domain([0, maximum]).range([0, 390])
+const yScale = d3.scaleLinear().domain([0, maximum]).range([0, 390])
 
 const renderChart = () => {
   const lineSelection = d3.select(svgArea).selectAll('rect')

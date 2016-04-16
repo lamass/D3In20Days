@@ -86,7 +86,7 @@ const mapZoom = d3.behavior.zoom()
    .on('zoom', onZooming)
 d3.select(svgArea).call(mapZoom)
 
-const rotateScale = d3.scale.linear()
+const rotateScale = d3.scaleLinear()
   .domain([0, svgWidth])
   .range([-180, 180])
 d3.select(svgArea)
