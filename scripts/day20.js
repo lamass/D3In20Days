@@ -1,3 +1,4 @@
+//thanks to https://github.com/codeforamerica/click_that_hood
 import d3 from 'd3'
 
 import data from './day20_assets/boston.geojson'
@@ -21,7 +22,7 @@ d3.select(svgArea).append('g')
   .enter()
   .append('path')
   .attr({
-    class: 'countries',
+    class: 'locations',
     d: geoPath,
     fill: 'red'
   })
