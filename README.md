@@ -1,5 +1,5 @@
 # d3.js in 20 days
-[LiveDemo](http://ecutdavid.github.io/D3In20Days/)
+[LiveDemo](http://davidguan.me/D3In20Days/)
 
 ### How to start development
 ```
